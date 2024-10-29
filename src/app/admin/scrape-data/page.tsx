@@ -1,5 +1,8 @@
 "use client"
 
+import { ScrapingQueue } from '@/components/admin/scraping-queue'
+import { apiClient } from '@/lib'
+import { ADMIN_API_ROUTES } from '@/utils'
 import { Button, Card, CardBody, CardFooter, Input, Listbox, ListboxItem, Tab, Tabs } from '@nextui-org/react'
 import axios from 'axios'
 import React, { useState } from 'react'
@@ -15,6 +18,13 @@ const ScrapeData = () => {
         setCities(parsed?.map((city: {name: string})=>city.name)??[]);
 
         console.log({response});
+    }
+
+    const startScraping = async () => {
+        await apiClient.post(ADMIN_API_ROUTES.CREATE_JOB, {
+            url: `https://packages.yatra.com/holidays/intl/search.htm?destination=${selectedCity}`,
+            jobType: {type: "location"}
+        })
     }
 
   return (
@@ -48,11 +58,12 @@ const ScrapeData = () => {
                 <div>
                     {selectedCity && <h1 className='text-xl'>Scrape data for {selectedCity}</h1>}
                 </div>
-                <Button size='lg' className='w-full' color='primary'>
+                <Button size='lg' className='w-full' color='primary' onClick={startScraping}>
                     Scrape
                 </Button>
             </CardFooter>
         </Card>
+        <ScrapingQueue />
     </section>
   )
 }
