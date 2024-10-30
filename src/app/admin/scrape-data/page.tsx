@@ -5,12 +5,14 @@ import { apiClient } from '@/lib'
 import { ADMIN_API_ROUTES } from '@/utils'
 import { Button, Card, CardBody, CardFooter, Input, Listbox, ListboxItem, Tab, Tabs } from '@nextui-org/react'
 import axios from 'axios'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import { CurrentlyScrapingTable } from './components/currently-scraping-table'
 
 const ScrapeData = () => {
 
     const [cities, setCities] = useState([]);
     const [selectedCity, setSelectedCity] = useState<undefined | string>(undefined);
+    const [jobs, setJobs] = useState([])
 
     const searchCities = async (searchString: string) => {
         const response = await axios.get(`https://secure.geonames.org/searchJSON?q=${searchString}&maxRows=5&username=kishan&style=SHORT`);
@@ -26,6 +28,17 @@ const ScrapeData = () => {
             jobType: {type: "location"}
         })
     }
+
+    useEffect(() => {
+        const getData = async () => {
+            const data = await apiClient.get(ADMIN_API_ROUTES.JOB_DETAILS);
+            setJobs(data.data.jobs);
+        }
+        const interval = setInterval(() => getData(), 3000);
+        return () => {
+            clearInterval(interval);
+        }
+    }, []);
 
   return (
     <section className='m-10 grid grid-cols-3 gap-5'>
@@ -64,6 +77,9 @@ const ScrapeData = () => {
             </CardFooter>
         </Card>
         <ScrapingQueue />
+        <div className="col-span-3">
+            <CurrentlyScrapingTable jobs={jobs} />
+        </div>
     </section>
   )
 }
