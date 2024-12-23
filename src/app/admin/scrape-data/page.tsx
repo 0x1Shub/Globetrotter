@@ -19,7 +19,6 @@ const ScrapeData = () => {
         const parsed = response.data?.geonames;
         setCities(parsed?.map((city: {name: string})=>city.name)??[]);
 
-        console.log({response});
     }
 
     const startScraping = async () => {
@@ -31,8 +30,12 @@ const ScrapeData = () => {
 
     useEffect(() => {
         const getData = async () => {
-            const data = await axios.get(ADMIN_API_ROUTES.JOB_DETAILS);
-            setJobs(data.data.jobs);
+            try {
+                const { data } = await axios.get(ADMIN_API_ROUTES.JOB_DETAILS);
+                setJobs(data.jobs);
+            } catch (error) {
+                console.error("Error fetching job details:", error);
+            }
         }
         const interval = setInterval(() => getData(), 3000);
         return () => {

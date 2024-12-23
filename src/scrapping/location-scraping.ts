@@ -6,5 +6,16 @@ interface PackageInfo {
 }
 
 export const startLocationScraping = async (page: Page): Promise<PackageInfo[]> => {
-    return "";
+    return await page.evaluate(() => {
+        const packageElements = document.querySelectorAll(".packages-container");
+        const packages: PackageInfo[] = [];
+        packageElements.forEach((packageElement) => {
+            const packageInfo: PackageInfo = {
+                id: null,
+                name: ""
+            };
+            packageInfo.name = (packageElement.querySelector(".package-name a") as HTMLElement).textContent || ""
+        })
+        return packages;
+    })
 }

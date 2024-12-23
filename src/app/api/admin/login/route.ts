@@ -24,7 +24,10 @@ export async function POST(request: Request) {
             return NextResponse.json({message: "Invalid email or password."}, {status: 404});
         }else{
             const token = await createToken(user.email, user.id);
-            cookies().set("access_token", token);
+
+            const cookieStore = await cookies();
+            cookieStore.set("access_token", token);
+
             return NextResponse.json({
                 userInfo: {
                     id: user.id,

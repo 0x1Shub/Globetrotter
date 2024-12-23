@@ -10,8 +10,12 @@ const ScrapingQueue = () => {
 
     useEffect(() => {
         const getData = async () => {
-            const data = await axios.get(ADMIN_API_ROUTES.JOB_DETAILS);
-            setOnGoingJobs(data.data.onGoingJobs);
+            try {
+                const { data } = await axios.get(ADMIN_API_ROUTES.JOB_DETAILS);
+                setOnGoingJobs(data.onGoingJobs);
+            } catch (error) {
+                console.error("Error fetching job details:", error);
+            }
         }
         const interval = setInterval(() => getData(), 3000);
         return () => {
