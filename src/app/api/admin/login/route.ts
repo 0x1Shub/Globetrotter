@@ -20,13 +20,14 @@ export async function POST(request: Request) {
         }
         const user = await prisma.admin.findUnique({where: {email, password: sha256(password).toString()}});
 
+        console.log({password:sha256(password).toString()});
+
         if(!user){
             return NextResponse.json({message: "Invalid email or password."}, {status: 404});
         }else{
             const token = await createToken(user.email, user.id);
 
-            const cookieStore = await cookies();
-            cookieStore.set("access_token", token);
+            (await cookies()).set("access_token", token);
 
             return NextResponse.json({
                 userInfo: {
