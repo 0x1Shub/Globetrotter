@@ -18,7 +18,6 @@ const ScrapeData = () => {
         const response = await axios.get(`https://secure.geonames.org/searchJSON?q=${searchString}&maxRows=5&username=kishan&style=SHORT`);
         const parsed = response.data?.geonames;
         setCities(parsed?.map((city: {name: string})=>city.name)??[]);
-
     }
 
     const startScraping = async () => {
@@ -51,14 +50,14 @@ const ScrapeData = () => {
                     <Tab key={'location'} title="Location">
                         <Input type='text' label='Search for a location' onChange={(e) => searchCities(e.target.value)} />
                         
-                        <div className="w-full min-h-[200px] max-w-[260px] border-small px-1 py-2 rounded-small border-default-200      dark:border-default-100 mt-5">  
+                        <div className="w-full min-h-[200px] max-w-[260px] border-small px-1 py-2 rounded-small border-default-200 dark:border-default-100 mt-5">  
                             <Listbox
                                 aria-label="Actions"
                                 onAction={(key) => setSelectedCity(key as string)}
                                 >
-                                {cities.map((city) => (
+                                {cities.map((city, index) => (
                                     <ListboxItem
-                                    key={city}
+                                    key={`${city}-${index}`}
                                     color="primary"
                                     className="text-primary-500"
                                     >
