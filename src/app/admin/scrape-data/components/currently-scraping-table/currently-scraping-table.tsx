@@ -13,7 +13,6 @@ import {
   DropdownMenu,
   DropdownItem,
   Chip,
-  User,
   Pagination,
   Selection,
   ChipProps,
