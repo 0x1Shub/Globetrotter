@@ -55,9 +55,9 @@ const ScrapeData = () => {
                                 aria-label="Actions"
                                 onAction={(key) => setSelectedCity(key as string)}
                                 >
-                                {cities.map((city, index) => (
+                                {cities.map((city) => (
                                     <ListboxItem
-                                    key={`${city}-${index}`}
+                                    key={`${city}`}
                                     color="primary"
                                     className="text-primary-500"
                                     >
