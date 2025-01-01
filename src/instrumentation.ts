@@ -1,5 +1,5 @@
 import { Browser } from 'puppeteer';
-import { startLocationScraping } from "./scrapping";
+import { startLocationScraping, startPackageScraping } from "./scrapping";
 
 export const register = async () => {
     if (process.env.NEXT_RUNTIME === "nodejs") {
@@ -45,7 +45,19 @@ export const register = async () => {
                     }
                 }
                 else if(job.data.jobType.type === "package"){
-                    console.log(job.data);
+                    const alreadyScrape = await prisma.trips.findUnique({where: {id: job.data.packageDetails.id}});
+                    if(!alreadyScrape){
+                        const pkg = await startPackageScraping(page, job.data.packageDetails);
+                        console.log(pkg);
+                        // await prisma.trips.create({data: pkg});
+                        // await prisma.jobs.update({
+                        //     where: { id: job.data.id }, 
+                        //     data:{ isComplete: true, status: "failed" }
+                        // });
+                    }
+
+
+
                 }
 
             } catch (err) {
