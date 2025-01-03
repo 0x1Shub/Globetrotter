@@ -17,7 +17,7 @@ export interface DestinationItineraryType {
     activities: Activity[];
   }
   
-  export interface PackageItinearyType {
+  export interface PackageItineraryType {
     city: string;
     daysActivity: DayActivity[];
   }
@@ -28,7 +28,7 @@ export interface DestinationItineraryType {
     description: string;
   }
   
-  export interface DetailedIntinearyType {
+  export interface DetailedItineraryType {
     title: string;
     value: string[];
   }
@@ -44,8 +44,8 @@ export interface DestinationItineraryType {
     themes: string[];
     price: number;
     destinationDetails: DestinationDetailsType[];
-    detailedIntineary: DetailedIntinearyType[];
+    detailedItinerary: DetailedItineraryType[];
     description: string;
-    packageIteniary: PackageItinearyType[];
-    scrapedOn: string;
+    packageItinerary: PackageItineraryType[];
+    scrappedOn: string;
   }

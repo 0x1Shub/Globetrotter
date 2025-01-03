@@ -26,7 +26,7 @@ export const register = async () => {
                     await prisma.jobs.update(
                         {where: 
                             {id: job.data.id}, 
-                            data:{isComplete: true, status: "failed"}});
+                            data:{isComplete: true, status: "complete"}});
                     for(const pkg of packages){
                         const jobCreated = await prisma.jobs.findFirst({
                             where: {
@@ -48,17 +48,37 @@ export const register = async () => {
                     const alreadyScrape = await prisma.trips.findUnique({where: {id: job.data.packageDetails.id}});
                     if(!alreadyScrape){
                         const pkg = await startPackageScraping(page, job.data.packageDetails);
-                        console.log(pkg);
-                        // await prisma.trips.create({data: pkg});
-                        // await prisma.jobs.update({
-                        //     where: { id: job.data.id }, 
-                        //     data:{ isComplete: true, status: "failed" }
-                        // });
+                        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                        // @ts-ignore
+                        await prisma.trips.create({data: pkg});
+                        await prisma.jobs.update({
+                            where: { id: job.data.id }, 
+                            data:{ isComplete: true, status: "complete" }
+                        });
                     }
-
-
-
                 }
+                // else if (job.data.jobType.type === "package") {
+                //     const alreadyScrape = await prisma.trips.findUnique({ where: { id: job.data.packageDetails.id } });
+                //     if (!alreadyScrape) {
+                //         const pkg = await startPackageScraping(page, job.data.packageDetails);
+                //         console.log(pkg);
+                //         try {
+                //             await prisma.trips.create({ data: pkg });
+                //             await prisma.jobs.update({
+                //                 where: { id: job.data.id },
+                //                 data: { isComplete: true, status: "failed" },
+                //             });
+                //             console.log("Trip data successfully added to the database.");
+                //         } catch (err) {
+                //             console.error("Failed to insert trip data into trips table:", err);
+                //             await prisma.jobs.update({
+                //                 where: { id: job.data.id },
+                //                 data: { isComplete: true, status: "failed" },
+                //             });
+                //         }
+                //     }
+                // }
+                
 
             } catch (err) {
                 console.error("Error connecting to browser or scraping:", err);

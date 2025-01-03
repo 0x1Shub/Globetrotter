@@ -1,7 +1,7 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
 
-import { DestinationDetailsType, DestinationItineraryType, DetailedIntinearyType, PackageItinearyType } from "@/types/trips";
+import { DestinationDetailsType, DestinationItineraryType, DetailedItineraryType, PackageItineraryType } from "@/types/trips";
 import { Page } from "puppeteer";
 
 interface PackageInfo {
@@ -17,10 +17,10 @@ interface PackageDetailsType {
     description: string;
     images: string[];
     themes: string[];
-    detailedIntineary: DetailedIntinearyType[];
+    detailedItinerary: DetailedItineraryType[];
     destinationItinerary: DestinationItineraryType[];
     destinationDetails: DestinationDetailsType[];
-    packageItinerary: PackageItinearyType[];
+    packageItinerary: PackageItineraryType[];
   }
   
 
@@ -30,7 +30,7 @@ export const startPackageScraping = async (page: Page, pkg:PackageInfo) => {
             description: "",
             images: [],
             themes: [],
-            detailedIntineary: [],
+            detailedItinerary: [],
             destinationItinerary: [],
             destinationDetails: [],
             packageItinerary: [],
@@ -53,7 +53,7 @@ export const startPackageScraping = async (page: Page, pkg:PackageInfo) => {
         packageDetails.themes = Array.from(themesSelector?.querySelectorAll("li"))
             .map((li) => li.innerText.trim());
       
-        const descriptions: DetailedIntinearyType[] = [];
+        const descriptions: DetailedItineraryType[] = [];
 
         const dayElements = packageElement?.querySelectorAll(
             ".itineraryOverlay .subtitle"
@@ -73,7 +73,7 @@ export const startPackageScraping = async (page: Page, pkg:PackageInfo) => {
             descriptions.push({ title, value });
         });
         console.log({ packageDetails });
-        packageDetails.detailedIntineary = descriptions;
+        packageDetails.detailedItinerary = descriptions;
 
         // Destination Itinerary
         const destinationItinerary: { place: string; totalNights: number }[] = [];
@@ -127,7 +127,7 @@ export const startPackageScraping = async (page: Page, pkg:PackageInfo) => {
 
         // Package Itinerary
 
-        const dataExtracted: PackageItinearyType[] = [];
+        const dataExtracted: PackageItineraryType[] = [];
         const timeline = document.querySelector(".time-line .right-column");
         const articles = timeline?.querySelectorAll("article");
 
