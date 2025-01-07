@@ -65,13 +65,13 @@ const Footer = () => {
                     <FaGithub />
                     </li>
                     <li className="bg-purple-500 bg-opacity-30 rounded-lg text-purple-500 text-3xl p-3 cursor-pointer hover:bg-opacity-50 transition-all duration-300">
-                    <FaDiscord />
+                    <FaTwitter />
                     </li>
                     <li className="bg-purple-500 bg-opacity-30 rounded-lg text-purple-500 text-3xl p-3 cursor-pointer hover:bg-opacity-50 transition-all duration-300">
                     <FaLinkedinIn />
                     </li>
                     <li className="bg-purple-500 bg-opacity-30 rounded-lg text-purple-500 text-3xl p-3 cursor-pointer hover:bg-opacity-50 transition-all duration-300">
-                    <FaTwitter />
+                    <FaDiscord />
                     </li>
                 </ul>
             </div>
