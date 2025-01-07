@@ -27,7 +27,7 @@ const Navbar = () => {
             !routesWithImages.includes(pathname) && (
                 <>
                 <div className='fixed left-0 top-0 h-[10vh] w-[100vw] overflow-hidden z-0'>
-                    <div className='h-[70vh] w-[100vw] z-10 top-0 left-0'>
+                    <div className='h-[70vh] w-[100vw] absolute z-10 top-0 left-0'>
                         <Image src="/home/home-bg.png" layout='fill' objectFit="cover" alt='Search' />
                     </div>
                 </div>
@@ -35,7 +35,7 @@ const Navbar = () => {
                     className='fixed left-0 top-0 h-[10vh] w-[100vw] overflow-hidden z-0'
                     style={{
                         backdropFilter: "blur(12px) saturate(280%)",
-                        WebkitBackdropFilter: "blur(12px) saturate(280%)"
+                        WebkitBackdropFilter: "blur(12px) saturate(280%)",
                     }}
                 ></div>
                 </>
@@ -53,21 +53,21 @@ const Navbar = () => {
 
             <NavbarContent className="hidden sm:flex gap-4" justify="center">
                 <NavbarItem>
-                <Link href="/" className={`${pathname == "/" ? "text-danger-500" : "text-white"}`}>
+                <Link href="/" className={`${pathname === "/" ? "text-danger-500" : "text-white"}`}>
                     Tours
                 </Link>
                 </NavbarItem>
                 <NavbarItem isActive>
                 <Link 
-                    aria-current="page" 
+                    // aria-current="page" 
                     href="/search-flights" 
-                    className={`${pathname == "/search-flights" ? "text-danger-500" : "text-white"}`}
+                    className={`${pathname === "/search-flights" ? "text-danger-500" : "text-white"}`}
                 >
                     Flights
                 </Link>
                 </NavbarItem>
                 <NavbarItem>
-                <Link href="/search-hotels" className={`${pathname == "/search-hotels" ? "text-danger-500" : "text-white"}`}>
+                <Link href="/search-hotels" className={`${pathname === "/search-hotels" ? "text-danger-500" : "text-white"}`}>
                     Hotels
                 </Link>
                 </NavbarItem>
@@ -77,13 +77,13 @@ const Navbar = () => {
                     <Button 
                         color='secondary' 
                         variant='flat' 
-                        className='text-purple-500'
+                        className='text-purple-500 font-semibold'
                     >
                         Login
                     </Button>
                 </NavbarItem>
                 <NavbarItem>
-                <Button color="danger" variant="flat">
+                <Button color="danger" variant="flat" className='text-red-500 font-semibold'>
                     Sign Up
                 </Button>
                 </NavbarItem>
