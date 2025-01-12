@@ -1,5 +1,7 @@
 import { useAppStore } from '@/store';
+import { USER_API_ROUTES } from '@/utils';
 import { Button, Input, Link, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader } from '@nextui-org/react';
+import axios from 'axios';
 import { Architects_Daughter } from 'next/font/google';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
@@ -20,15 +22,39 @@ const AuthModal = ({ isOpen, onOpen, onOpenChange}: {
 
     const [modalType, setModalType] = useState("login");
     const router = useRouter();
-    const { userInfo } = useAppStore();
+    const { setUserInfo } = useAppStore();
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
-    const handleSignup = async (onClose: () => void) => {}
+    const handleSignup = async (onClose: () => void) => {
+        const response = await axios.post(USER_API_ROUTES.SIGNUP, {
+            firstName, lastName, email, password
+        });
+        if(response.data.userInfo) {
+            setUserInfo(response.data.userInfo);
+            onClose();
+            setFirstName("");
+            setLastName("");
+            setEmail("");
+            setPassword("");
+        }
+    }
 
-    const handleLogin = async (onClose: () => void) => {}
+    const handleLogin = async (onClose: () => void) => {
+        const response = await axios.post(USER_API_ROUTES.LOGIN, {
+            email, password
+        });
+        if(response.data.userInfo) {
+            setUserInfo(response.data.userInfo);
+            onClose();
+            setFirstName("");
+            setLastName("");
+            setEmail("");
+            setPassword("");
+        }
+    }
 
     const switchModalType = () => {
         if (modalType === "login") setModalType("signup");
