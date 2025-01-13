@@ -39,8 +39,25 @@ const Trip = ({ params: {tripId} } : {params: {tripId: string}}) => {
         setDate(newDate);
       };
 
-    const bookTrip = () => {
-        
+    const bookTrip = async () => {
+        const isoDate = date.toISOString();
+        console.log({
+          bookingId: tripData?.id,
+          bookingType: "trips",
+          userId: userInfo?.id,
+          taxes: 3300,
+          date: isoDate,
+        })
+        const response = await axios.post(USER_API_ROUTES.CREATE_BOOKING, {
+          bookingId: tripData?.id,
+          bookingType: "trips",
+          userId: userInfo?.id,
+          taxes: 3300,
+          date: isoDate,
+        });
+        if(response.data.client_secret){
+          router.push(`/checkout?client_secret=${response.data.client_secret}`)
+        }
     }
 
   return (
