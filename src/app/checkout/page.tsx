@@ -16,16 +16,18 @@ const Checkout = () => {
 
     useEffect(() => {
         if(client_secret){
-            setClientSecret(clientSecret);
+            setClientSecret(client_secret);
         }
     }, [client_secret]);
 
   return (
-    <div className='min-h-[80vh]'>{clientSecret && (
-        <Elements options={{clientSecret, appearance:{theme: "stripe"}}} stripe={stripePromise}>
-            <StripeForm clientSecret={clientSecret} />
-        </Elements>
-    )}</div>
+    <div className='min-h-[80vh]'>
+        {clientSecret && (
+            <Elements options={{clientSecret, appearance:{theme: "stripe"}}} stripe={stripePromise}>
+                <StripeForm clientSecret={clientSecret} />
+            </Elements>
+        )}
+    </div>
   )
 }
 

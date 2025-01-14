@@ -14,4 +14,5 @@ export const USER_API_ROUTES = {
     SIGNUP: `${baseRoute}/auth/signup`,
     ME: `${baseRoute}/auth/me`,
     CREATE_BOOKING: `${baseRoute}/booking`,
+    
 }

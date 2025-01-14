@@ -41,3 +41,22 @@ export async function POST(request: Request){
         return NextResponse.json({message: "An unexpected error occured."}, {status: 500})
     }
 }
+
+export async function PATCH(request: Request) {
+    try{    
+        const { paymentIntent } = await request.json();
+        if(paymentIntent){
+            await prisma.bookings.update({
+                where: {paymentIntent},
+                data: {isCompleted: true},
+            });
+            return NextResponse.json(
+                {message: "Payment Successful."}, 
+                {status: 200}
+            );
+        }
+
+    }catch(error){
+        return NextResponse.json({message: "An unexpected error occured."}, {status: 500})
+    }
+}
