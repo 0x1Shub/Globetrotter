@@ -1,7 +1,9 @@
 import { AuthSlice, createAuthSlice } from "./auth-slice";
+import { ScrapingSlice, createScrapingSlice } from './scraping-slice';
 
-export {createAuthSlice}
+export {createAuthSlice, createScrapingSlice}
 
 export type {
-    AuthSlice
+    AuthSlice,
+    ScrapingSlice,
 };
