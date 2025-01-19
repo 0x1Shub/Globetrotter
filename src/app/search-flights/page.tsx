@@ -200,6 +200,7 @@ const SearchFlights = () => {
                                 </div>
                             )}
                         </div>
+                        
                         <Input
                             type="date"
                             placeholder="Dates"
